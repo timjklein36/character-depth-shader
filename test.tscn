@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ccggnuvaayd1y"]
+[gd_scene load_steps=12 format=3 uid="uid://ccggnuvaayd1y"]
 
 [ext_resource type="Shader" path="res://depth-check-simple.gdshader" id="1_2p1dy"]
 [ext_resource type="Script" path="res://general_camera_controller.gd" id="2_gttkc"]
@@ -26,6 +26,20 @@ shader_parameter/magnitude = 16
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uc2rx"]
 transparency = 1
 albedo_color = Color(0.654902, 1, 1, 0.690196)
+
+[sub_resource type="SphereMesh" id="SphereMesh_cyw2u"]
+radius = 0.1
+height = 0.2
+radial_segments = 12
+rings = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frccw"]
+shading_mode = 0
+albedo_color = Color(0.607843, 0.819608, 0.980392, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85y41"]
+shading_mode = 0
+albedo_color = Color(1, 0.643137, 1, 1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -69,13 +83,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
 mesh = SubResource("BoxMesh_xu2vr")
 surface_material_override/0 = SubResource("StandardMaterial3D_uc2rx")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.717576, -0.307547, 0.6249, 0, 0.897225, 0.441573, -0.696481, -0.316862, 0.643827, 4.62662, 3.26931, 4.76675)
+[node name="CameraFocalPoint" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 2.98023e-08, 0, 0, 1, 0, -2.98023e-08, 0, 1, 0, 2.38419e-07, 0)
+gizmo_extents = 2.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraFocalPoint"]
+transform = Transform3D(1, -2.98023e-08, 2.98023e-08, 0, 1, -8.88178e-16, 0, 0, 1, 0, 0, 7)
 script = ExtResource("2_gttkc")
 
-[node name="CameraFocalPoint" type="Marker3D" parent="Camera3D"]
+[node name="FreeRotationFocalPoint" type="Marker3D" parent="CameraFocalPoint/Camera3D"]
 unique_name_in_owner = true
-transform = Transform3D(0.717576, 0, -0.696481, -0.307547, 0.897225, -0.316862, 0.6249, 0.441574, 0.643827, 0, 1.90735e-06, -7.40377)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19375e-08, 1.90735e-06, -7.00321)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="CameraFocalPoint/Camera3D/FreeRotationFocalPoint"]
+transform = Transform3D(1, 2.98023e-08, -2.98023e-08, 0, 1, 8.88178e-16, 0, 0, 1, 2.20554e-07, -1.90735e-06, 0.00321388)
+visible = false
+mesh = SubResource("SphereMesh_cyw2u")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_frccw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraFocalPoint"]
+visible = false
+mesh = SubResource("SphereMesh_cyw2u")
+surface_material_override/0 = SubResource("StandardMaterial3D_85y41")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
