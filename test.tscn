@@ -1,0 +1,82 @@
+[gd_scene load_steps=9 format=3 uid="uid://ccggnuvaayd1y"]
+
+[ext_resource type="Shader" path="res://depth-check-simple.gdshader" id="1_2p1dy"]
+[ext_resource type="Script" path="res://general_camera_controller.gd" id="2_gttkc"]
+
+[sub_resource type="Environment" id="Environment_ir0nc"]
+background_color = Color(0.686275, 0.764706, 0.988235, 1)
+background_energy_multiplier = 0.0
+ambient_light_source = 1
+ambient_light_energy = 0.0
+reflected_light_source = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_w0f20"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1162p"]
+render_priority = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_erp0h"]
+render_priority = 1
+next_pass = SubResource("StandardMaterial3D_1162p")
+shader = ExtResource("1_2p1dy")
+shader_parameter/magnitude = 16
+
+[sub_resource type="BoxMesh" id="BoxMesh_xu2vr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uc2rx"]
+transparency = 1
+albedo_color = Color(0.654902, 1, 1, 0.690196)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ir0nc")
+
+[node name="ShadedMeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_w0f20")
+surface_material_override/0 = SubResource("ShaderMaterial_erp0h")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+mesh = SubResource("BoxMesh_xu2vr")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+mesh = SubResource("BoxMesh_xu2vr")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+mesh = SubResource("BoxMesh_xu2vr")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+mesh = SubResource("BoxMesh_xu2vr")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+mesh = SubResource("BoxMesh_xu2vr")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+mesh = SubResource("BoxMesh_xu2vr")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+mesh = SubResource("BoxMesh_xu2vr")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+mesh = SubResource("BoxMesh_xu2vr")
+surface_material_override/0 = SubResource("StandardMaterial3D_uc2rx")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.717576, -0.307547, 0.6249, 0, 0.897225, 0.441573, -0.696481, -0.316862, 0.643827, 4.62662, 3.26931, 4.76675)
+script = ExtResource("2_gttkc")
+
+[node name="CameraFocalPoint" type="Marker3D" parent="Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(0.717576, 0, -0.696481, -0.307547, 0.897225, -0.316862, 0.6249, 0.441574, 0.643827, 0, 1.90735e-06, -7.40377)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+sky_mode = 1
