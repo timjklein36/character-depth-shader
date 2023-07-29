@@ -16,9 +16,7 @@ void fragment() {
 
 	if (zdepth < zpos) {
         if (!should_render) {
-            ALPHA = 0.0;
-        } else {
-            ALPHA = 1.0;
+            discard;
         }
 	} else {
         discard;

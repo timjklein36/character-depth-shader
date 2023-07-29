@@ -19,7 +19,7 @@ render_priority = 2
 render_priority = 1
 next_pass = SubResource("StandardMaterial3D_1162p")
 shader = ExtResource("1_2p1dy")
-shader_parameter/magnitude = 16
+shader_parameter/magnitude = 4
 
 [sub_resource type="BoxMesh" id="BoxMesh_xu2vr"]
 
